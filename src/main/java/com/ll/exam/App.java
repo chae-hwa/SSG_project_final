@@ -35,11 +35,38 @@ public class App {
                 case "삭제":
                     remove(rq);
                     break;
-
+                case "수정":
+                    modify(rq);
+                    break;
                 case "종료":
                     break outer;
             }
         }
+    }
+
+    private void modify(Rq rq) {
+        int paramId = rq.getIntParam("id",0);
+
+        if(paramId == 0){
+            System.out.println("id를 입력해주세요.");
+            return;
+        }
+
+        WiseSaying foundwiseSaying = findById(paramId);
+
+        if(foundwiseSaying == null){
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n",paramId);
+            return;
+        }
+        System.out.printf("명언 (기존) :%s\n",foundwiseSaying.content);
+        System.out.printf("명언 : ");
+        foundwiseSaying.content = sc.nextLine().trim();
+        System.out.printf("작가 (기존) :%s\n",foundwiseSaying.author);
+        System.out.printf("작가 : ");
+        foundwiseSaying.author = sc.nextLine().trim();
+
+        System.out.printf("%d번 명언이 수정되었습니다.\n",paramId);
+
     }
 
 
@@ -50,8 +77,8 @@ public class App {
             return;
         }
 
-        WiseSaying foundwiseSaying = findBytId(paramId);
-
+        WiseSaying foundwiseSaying = findById(paramId);
+        // 전사 a전사 =  a원숭이();
         if(foundwiseSaying == null){
             System.out.printf("%d번 명언은 존재하지 않습니다.\n",paramId);
             return;
@@ -61,10 +88,10 @@ public class App {
         System.out.printf("%d번 명언을 삭제합니다.\n",paramId);
     }
 
-    private WiseSaying findBytId(int paramId) {
+    private WiseSaying findById(int paramId) { // 명언찾기 메서드(찾) 집(주소)
         for(WiseSaying wiseSaying : wiseSayings){
             if(wiseSaying.id == paramId){
-                return wiseSaying;
+                return wiseSaying; // 명언 반환값
             }
         }return null;
     }
