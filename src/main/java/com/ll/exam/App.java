@@ -23,20 +23,53 @@ public class App {
             System.out.printf("명령) ");
             String cmd = sc.nextLine().trim();
 
-            switch(cmd){
+            Rq rq = new Rq(cmd);
+
+            switch(rq.path){
                 case "등록":
-                    write();
+                    write(rq);
                     break;
                 case "목록":
-                    list();
+                    list(rq);
                     break;
+                case "삭제":
+                    remove(rq);
+                    break;
+
                 case "종료":
                     break outer;
             }
         }
     }
 
-    private void list() {
+
+    private void remove(Rq rq){
+        int paramId = rq.getIntParam("id",0);
+        if(paramId == 0){
+            System.out.println("id를 입력해주세요");
+            return;
+        }
+
+        WiseSaying foundwiseSaying = findBytId(paramId);
+
+        if(foundwiseSaying == null){
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n",paramId);
+            return;
+        }
+
+        wiseSayings.remove(foundwiseSaying);
+        System.out.printf("%d번 명언을 삭제합니다.\n",paramId);
+    }
+
+    private WiseSaying findBytId(int paramId) {
+        for(WiseSaying wiseSaying : wiseSayings){
+            if(wiseSaying.id == paramId){
+                return wiseSaying;
+            }
+        }return null;
+    }
+
+    private void list(Rq rq) {
         System.out.println("번호 / 명언 / 작가");
         System.out.println("----------------");
 
@@ -46,7 +79,7 @@ public class App {
         }
     }
 
-    private void write() {
+    private void write(Rq rq) {
         System.out.printf("명언 : ");
         String content = sc.nextLine().trim();
         System.out.printf("작가 : ");
