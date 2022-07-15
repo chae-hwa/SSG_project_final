@@ -21,10 +21,20 @@ public class App {
             String cmd = sc.nextLine().trim();
 
             switch(cmd){
+                case "등록":
+                    write();
+                    break;
                 case "종료":
                     break outer;
             }
         }
+    }
+
+    private void write() {
+        System.out.printf("명언 : ");
+        String content = sc.nextLine().trim();
+        System.out.printf("작가 : ");
+        String author = sc.nextLine().trim();
 
     }
 }
