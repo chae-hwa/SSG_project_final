@@ -4,11 +4,13 @@ import java.util.Scanner;
 
 public class App {
     Scanner sc;
+    int wiseSayingLastId;
 
 
 
     App(){
     sc = new Scanner(System.in);
+    wiseSayingLastId = 0;
 
 
     }
@@ -35,6 +37,10 @@ public class App {
         String content = sc.nextLine().trim();
         System.out.printf("작가 : ");
         String author = sc.nextLine().trim();
+
+        int id = ++wiseSayingLastId;
+
+        System.out.printf("%d번 명언이 등록되었습니다.\n",id);
 
     }
 }
